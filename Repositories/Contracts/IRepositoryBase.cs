@@ -6,5 +6,9 @@ namespace Repositories.Contracts
     {
         IQueryable<T> FindAll(bool trackChanges);
         T? FindByContition(Expression<Func<T, bool>> expression, bool trackChanges);
+        
+        void Create(T entity);
+
+        void Remove(T entity);
     }
 }
