@@ -13,7 +13,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-link active" aria-current="page" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
-                <a class="nav-link active" aria-current="page" asp-controller="Product" asp-action="Index">Ürünler</a>
+                <a class="nav-link active" aria-current="page" asp-controller="Product" asp-action="Index">Ürünler(@await Component.InvokeAsync("ProductSummary"))</a>
                 <a class="nav-link active" aria-current="page" asp-controller="Category" asp-action="Index">Kategoriler</a>
                 
             </div>
