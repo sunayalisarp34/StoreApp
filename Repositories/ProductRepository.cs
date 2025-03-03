@@ -31,5 +31,10 @@ namespace Repositories
         {
             return FindByContition(p => p.ProductId.Equals(id),trackChanges);
         }
+
+        public void UpdateOneProduct(Product entity)
+        {
+            Update(entity);
+        }
     }
 }
