@@ -7,10 +7,14 @@ namespace Entities.Models
         public int ProductId { get; set; }
         
 
-        public string? ProductName { get; set; } = string.Empty;
+        public String? ProductName { get; set; } = String.Empty;
         
         
         public decimal Price { get; set; }
+
+        public String? Summary { get; set; } = String.Empty;
+
+        public String? ImageUrl {  get; set; }
 
         //FK
         public int? CategoryId { get; set; }

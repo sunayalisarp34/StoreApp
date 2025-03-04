@@ -8,10 +8,14 @@ namespace Entities.Dtos
         public int ProductId { get; init; }
 
         [Required(ErrorMessage = "ProductName is required")]
-        public string? ProductName { get; init; } = string.Empty;
+        public String? ProductName { get; init; } = String.Empty;
 
         [Required(ErrorMessage = "Price is required")]
         public decimal Price { get; init; }
+
+        public String? Summary { get; init; } = String.Empty;
+
+        public String? ImageUrl { get; set; }
 
         //FK
         public int? CategoryId { get; init; }

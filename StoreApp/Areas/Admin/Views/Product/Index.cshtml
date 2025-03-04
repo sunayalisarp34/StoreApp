@@ -19,6 +19,7 @@
         <thead>
             <tr>
                 <th>ID</th>
+                <th>ImageUrl</th>
                 <th>Ürün Adı</th>
                 <th>Fiyat</th>
                 <th>Operasyonlar</th>
@@ -28,6 +29,9 @@
             @foreach(Product prd in Model){
                 <tr>
                     <td>@prd.ProductId</td>
+                    <td>
+                        <img class="border border-light rounded" src="@prd?.ImageUrl" alt="@prd?.ProductName" width="50"/>
+                    </td>
                     <td>@prd.ProductName</td>
                     <td>@prd.Price.ToString("c")</td>
                     <td>
