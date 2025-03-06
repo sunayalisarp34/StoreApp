@@ -22,11 +22,21 @@
             <h5 class="card-title">@Model.ProductName</h5>
             <h6 class="card-subtitle mb-2 text-body-secondary">@Model.Price.ToString("c") TL</h6>
         <p class="card-text">Ürün açıklaması</p>
-        <a asp-action="Get" asp-route-id="@Model.ProductId" class="btn btn-primary">
-                <i class="fa-solid fa-arrow-right"></i>
-            Detaylar
-         </a>
+        <div class="btn btn-group">
+            <a asp-action="Get" asp-route-id="@Model.ProductId" class="btn btn-primary">
+                    <i class="fa-solid fa-arrow-right"></i>
+                    Detaylar
+             </a>
+        <form itemid="@Model.ProductId" asp-page="/cart" method="post">
+            <input type="hidden" asp-for="ProductId"/>
+            <input type="hidden" name="returnUrl" value="/Product/Get/@Model.ProductId"/>
+            <button type="submit" class="btn btn-outline-success">
+                <i class="fa fa-cart-plus"></i>
+            </button>
+        </form>
+
         
+        </div>
     </div>
 </div>
 </div>
