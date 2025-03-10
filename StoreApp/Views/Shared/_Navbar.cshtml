@@ -28,7 +28,9 @@
             </ul>
             <ul class="navbar-nav flex-grow-1">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" asp-area="" asp-page="/Cart">Sepet</a>
+                    <a class="nav-link active" aria-current="page" asp-area="" asp-page="/Cart">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        Sepet(@await Component.InvokeAsync("CartSummary"))</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin Paneli</a>
