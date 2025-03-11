@@ -1,46 +1,52 @@
-using Entities.Models;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
-using Repositories;
-using Repositories.Contracts;
-using Services;
-using Services.Contracts;
-using StoreApp.Models;
+using StoreApp.Infrastructure.Extensions;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<RepositoryContext>(options =>
-{
-    options.UseSqlite(builder.Configuration.GetConnectionString("sqlconnection"),
-    b => b.MigrationsAssembly("StoreApp"));
-});
+
+//builder.Services.AddDbContext<RepositoryContext>(options =>
+//{
+//    options.UseSqlite(builder.Configuration.GetConnectionString("sqlconnection"),
+//    b => b.MigrationsAssembly("StoreApp"));
+//});
+
+builder.Services.ConfigureDbContext(builder.Configuration);
+
 
 // For session
 
-builder.Services.AddDistributedMemoryCache();
-builder.Services.AddSession(options =>
-{
-    options.Cookie.Name = "StoreApp.Session";
-    // wait user for ten minutes in current session in idle
-    options.IdleTimeout = TimeSpan.FromMinutes(10);
-});
-builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+//builder.Services.AddDistributedMemoryCache();
+//builder.Services.AddSession(options =>
+//{
+//    options.Cookie.Name = "StoreApp.Session";
+//    // wait user for ten minutes in current session in idle
+//    options.IdleTimeout = TimeSpan.FromMinutes(10);
+//});
+
+builder.Services.ConfigureSession();
+
+//builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 
-builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+//builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
+//builder.Services.AddScoped<IProductRepository, ProductRepository>();
+//builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+//builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
-builder.Services.AddScoped<IServiceManager, ServiceManager>();
-builder.Services.AddScoped<IProductService, ProductManager>();
-builder.Services.AddScoped<ICategoryService, CategoryManager>();
-builder.Services.AddScoped<IOrderService, OrderManager>();
+builder.Services.ConfigureRepositoryRegistration();
 
-builder.Services.AddScoped<Cart>(c => SessionCart.GetCart(c));
+//builder.Services.AddScoped<IServiceManager, ServiceManager>();
+//builder.Services.AddScoped<IProductService, ProductManager>();
+//builder.Services.AddScoped<ICategoryService, CategoryManager>();
+//builder.Services.AddScoped<IOrderService, OrderManager>();
+
+builder.Services.ConfigureServiceRegistration();
+builder.Services.ConfigureRouting();
+
+//builder.Services.AddScoped<Cart>(c => SessionCart.GetCart(c));
 
 builder.Services.AddAutoMapper(typeof(Program));
 
@@ -70,4 +76,6 @@ app.UseEndpoints(endpoints =>
 //    name:"default",
 //    pattern:"{controller=Home}/{action=Index}/{id?}");
 
+app.ConfigureAndCheckMigration();
+app.ConfigureLocalization();
 app.Run();
