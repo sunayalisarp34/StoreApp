@@ -35,9 +35,8 @@
                         <i class="fa-solid fa-cart-shopping"></i>
                         Sepet(@await Component.InvokeAsync("CartSummary"))</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin Paneli</a>
-                </li>
+                
+                <partial name="_LoginMenu"/>
             </ul>
 
         </div>

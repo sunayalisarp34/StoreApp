@@ -1,4 +1,6 @@
 ﻿using Entities.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
 using Repositories.Contracts;
@@ -17,7 +19,21 @@ namespace StoreApp.Infrastructure.Extensions
             {
                 options.UseSqlite(configuration.GetConnectionString("sqlconnection"),
                 b => b.MigrationsAssembly("StoreApp"));
+                options.EnableSensitiveDataLogging(true);
             });
+        }
+
+        public static void ConfigureIdentity(this IServiceCollection services)
+        {
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+                options.User.RequireUniqueEmail = true;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 6;
+            }).AddEntityFrameworkStores<RepositoryContext>();
         }
         
         public static void ConfigureSession(this IServiceCollection services)
@@ -47,8 +63,18 @@ namespace StoreApp.Infrastructure.Extensions
             services.AddScoped<IProductService, ProductManager>();
             services.AddScoped<ICategoryService, CategoryManager>();
             services.AddScoped<IOrderService, OrderManager>();
+            services.AddScoped<IAuthService, AuthManager>();
         }
-
+        public static void ConfigureApplicationCookie(this IServiceCollection services)
+        {
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = new PathString("/Account/Login");
+                options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+                options.AccessDeniedPath = new PathString("/Account/AccessDenied");
+            });
+        }
         public static void ConfigureRouting(this IServiceCollection services) 
         {
             services.AddRouting(options =>

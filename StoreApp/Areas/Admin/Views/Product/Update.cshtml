@@ -1,14 +1,7 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-@model ProductDtoForUpdate
+﻿@model ProductDtoForUpdate
 
 <div class="text-center">
-    <div class="display-6">
-        Ürün Güncelle
-    </div>
+    <div class="display-6">Create</div>
 </div>
 
 <form method="post" asp-action="Update" enctype="multipart/form-data">
@@ -18,8 +11,8 @@
     <input type="hidden" asp-for="ProductId" />
 
     <div class="form-group my-3">
-        <label asp-for="CategoryId">Kategori</label>
-        <select class="form-control" asp-for="CategoryId" asp-items="@ViewBag.Categories">
+        <label asp-for="CategoryId"></label>
+        <select class="form-control" asp-items="@ViewBag.Categories" asp-for="CategoryId">
         </select>
     </div>
 
@@ -29,17 +22,17 @@
     </div>
 
     <div class="form-group my-3">
-        <label asp-for="Summary">Ürün Açıklaması</label>
+        <label asp-for="Summary">Hakkında</label>
         <input asp-for="Summary" class="form-control" />
     </div>
 
     <div class="form-group my-3">
-        <label asp-for="Price">Ürün Fiyatı</label>
+        <label asp-for="Price">Fiyat</label>
         <input asp-for="Price" class="form-control" />
     </div>
 
-    <div class="form-group my-4">
-        <img class="rounded shadow" width="150" src="@Model?.ImageUrl"/>
+    <div class="from-group my-3">
+        <img class="rounded shadow" width="150" src="@Model?.ImageUrl" />
     </div>
 
     <div class="form-group my-3">
@@ -49,7 +42,7 @@
 
     <div class="form-group my-3">
         <div class="btn-group">
-            <button class="btn btn-success" type="submit">
+            <button class="btn btn-primary" type="submit">
                 <i class="fa fa-save"></i>
                 Güncelle
             </button>
